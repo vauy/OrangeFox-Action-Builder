@@ -91,13 +91,18 @@ jobs:
         echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
     - name: Building OrangeFox
-      run: |
-        cd ${GITHUB_WORKSPACE}/OrangeFox/fox_${{ github.event.inputs.MANIFEST_BRANCH }}
-        set +e
-        source build/envsetup.sh
-        export ALLOW_MISSING_DEPENDENCIES=true
-        set -e
-        lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && make clean && mka adbd ${{ github.event.inputs.BUILD_TARGET }}image
+  run: |
+    cd ${GITHUB_WORKSPACE}/OrangeFox/fox_${{ github.event.inputs.MANIFEST_BRANCH }}
+    set +e
+    source build/envsetup.sh
+    export ALLOW_MISSING_DEPENDENCIES=true
+    set -e
+    echo "=== 检查设备树 ==="
+    ls -la device/xiaomi/cannon/AndroidProducts.mk
+    cat device/xiaomi/cannon/AndroidProducts.mk
+    echo "=== 检查可用产品 ==="
+    lunch 2>&1 | head -50
+    lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && make clean && mka adbd ${{ github.event.inputs.BUILD_TARGET }}image
 
     - name: Set Release Properties
       run: |
