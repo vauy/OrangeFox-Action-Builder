@@ -1,4 +1,4 @@
-name: OrangeFox - Build
+name: OrangeFox-14.1 - Build
 
 # Credits to:
 # https://github.com/TeamWin
@@ -97,6 +97,8 @@ jobs:
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         set -e
+echo "=== 可用产品列表 ==="
+lunch 2>&1 | head -30
         lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && make clean && mka adbd ${{ github.event.inputs.BUILD_TARGET }}image
 
     - name: Set Release Properties
