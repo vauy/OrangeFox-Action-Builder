@@ -102,7 +102,7 @@ jobs:
         cat device/xiaomi/cannon/AndroidProducts.mk
         echo "=== 检查可用产品 ==="
         lunch 2>&1 | head -50
-        lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && make clean && mka adbd ${{ github.event.inputs.BUILD_TARGET }}image
+        lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-ap2a-eng && make clean && mka adbd ${{ github.event.inputs.BUILD_TARGET }}image
 
     - name: Set Release Properties
       run: |
